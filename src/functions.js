@@ -37,16 +37,19 @@ function averagePriceOfBooks(books) {
 }
 
 function booksOfTypeNotes(books) {
-    return books.filter(b => b.type === "notes");
+    return books.filter(book => book.publisher === 'Apunts');
 }
 
+
 function booksNotSold(books) {
-    return books.filter(b => !b.sold);
+    return books.filter(b => !b.soldDate || b.soldDate === "");
 }
 
 function incrementPriceOfbooks(books, percentage) {
-    return books.map(b => ({ ...b, price: b.price * (1 + percentage) }));
-}
+    return books.map(b => ({...b, price: +(b.price * (1 + percentage)).toFixed(1) }));
+  }
+  
+  
 
 function getUserById(users, userId) {
     const user = users.find(u => u.id === userId);
