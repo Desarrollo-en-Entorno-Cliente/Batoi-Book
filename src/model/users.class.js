@@ -1,32 +1,53 @@
 import User from './user.class.js';
+import * as api from '../services/users.api.js';
 
 export default class Users {
-  constructor(data = []) {
-    this.populate(data);
+  constructor() {
+    this.data = [];
   }
 
-  populate(data) {
-    this.data = data.map(d => new User(d.id, d.nick, d.email, d.password));
+  // Carga todos los usuarios desde la API
+  async populate() {
+    const users = await api.getDBUsers();
+    this.data = users.map(u => new User(u.id, u.nick, u.email, u.password));
   }
 
-  addUser(user) {
-    const newId = this.data.length > 0 ? Math.max(...this.data.map(u => u.id)) + 1 : 1;
-    const newUser = new User(newId, user.nick, user.email, user.password);
-    this.data.push(newUser);
-    return newUser;
+  // Añade un usuario
+  async addUser(user) {
+    const newUserData = await api.addDBUser(user);
+    const userInstance = new User(newUserData.id, newUserData.nick, newUserData.email, newUserData.password);
+    this.data.push(userInstance);
+    return userInstance;
   }
 
-  removeUser(id) {
-    const index = this.getUserIndexById(id);
-    return this.data.splice(index, 1)[0];
+  // Elimina un usuario
+  async removeUser(id) {
+    const user = this.getUserById(id); // Lanza error si no existe
+    await api.removeDBUser(id);
+    this.data = this.data.filter(u => u.id !== id);
+    return user;
   }
 
-  changeUser(user) {
+  // Modifica un usuario
+  async changeUser(user) {
+    const _ = this.getUserById(user.id); // Lanza error si no existe
+    const updatedData = await api.changeDBUser(user);
+    const updatedUser = new User(updatedData.id, updatedData.nick, updatedData.email, updatedData.password);
     const index = this.getUserIndexById(user.id);
-    this.data[index] = new User(user.id, user.nick, user.email, user.password);
+    this.data[index] = updatedUser;
+    return updatedUser;
+  }
+
+  // Cambia solo la contraseña
+  async changeUserPassword(id, newPassword) {
+    const _ = this.getUserById(id); // Lanza error si no existe
+    const updatedData = await api.changeDBUserPassword(id, newPassword);
+    const index = this.getUserIndexById(id);
+    this.data[index].password = updatedData.password;
     return this.data[index];
   }
 
+  // Métodos de consulta
   getUserById(id) {
     const user = this.data.find(u => u.id === id);
     if (!user) throw new Error(`User with id ${id} not found`);

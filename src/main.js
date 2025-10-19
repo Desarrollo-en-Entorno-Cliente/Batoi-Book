@@ -1,20 +1,13 @@
-import data from '/src/services/datos.js';
-// import * as func from '/src/functions.js';
+import Books from './model/books.class.js';
+import Modules from './model/modules.class.js';
+import Users from './model/users.class.js';
 
-import modules from './model/modules.class.js';
-import users from './model/users.class.js';
-import books from './model/books.class.js';
+import './style.css';
+import javascriptLogo from '/image.png';
 
-const booksInstance = new books();
-const modulesInstance = new modules();
-const usersInstance = new users();
-
-booksInstance.populate(data.books);
-modulesInstance.populate(data.modules);
-usersInstance.populate(data.users);
-
-import './style.css'
-import javascriptLogo from '/image.png'
+const booksInstance = new Books();
+const modulesInstance = new Modules();
+const usersInstance = new Users();
 
 document.querySelector('#app').innerHTML = `
 <center>
@@ -27,17 +20,18 @@ document.querySelector('#app').innerHTML = `
       Abre la consola para ver el resultado
     </p>
   </div>
-  </center>
-`
+</center>
+`;
+
+async function init() {
+  await booksInstance.populate();
+  await modulesInstance.populate();
+  await usersInstance.populate();
 
 
-const array5021 = booksInstance.booksFromModule('5021').map(b => b.toString());
-console.log(array5021);
+  console.log(booksInstance.toString());
+  console.log(usersInstance.toString());
+  console.log(modulesInstance.toString());
+}
 
-
-booksInstance.booksFromModule('5021').filter(b => b.status === 'new') .map(b => b.toString()).forEach(console.log);
-
-booksInstance.booksFromModule('5021').map(b => {
-        booksInstance.incrementPriceOfbooks(0.1);
-        return b.toString();
-    }).forEach(console.log);
+init();

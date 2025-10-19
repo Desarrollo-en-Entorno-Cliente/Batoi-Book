@@ -1,32 +1,44 @@
 import Book from './book.class.js';
+import * as api from '../services/books.api.js';
 
 export default class Books {
-  constructor(data = []) {
-    this.populate(data);
+  constructor() {
+    this.data = [];
   }
 
-  populate(data) {
-    this.data = data.map(d => new Book(d));
+  // Carga todos los libros desde la API
+  async populate() {
+    const books = await api.getDBBooks();
+    this.data = books.map(b => new Book(b));
   }
 
-  addBook(book) {
-    const newId = this.data.length > 0 ? Math.max(...this.data.map(b => b.id)) + 1 : 1;
-    const newBook = new Book({ ...book, id: newId });
-    this.data.push(newBook);
-    return newBook;
+  // Añade un libro
+  async addBook(book) {
+    const newBookData = await api.addDBBook(book);
+    const bookInstance = new Book(newBookData);
+    this.data.push(bookInstance);
+    return bookInstance;
   }
 
-  removeBook(id) {
-    const index = this.getBookIndexById(id);
-    return this.data.splice(index, 1)[0];
+  // Elimina un libro
+  async removeBook(id) {
+    const book = this.getBookById(id); // Lanza error si no existe
+    await api.removeDBBook(id);
+    this.data = this.data.filter(b => b.id !== id);
+    return book;
   }
 
-  changeBook(book) {
+  // Modifica un libro
+  async changeBook(book) {
+    const _ = this.getBookById(book.id); // Lanza error si no existe
+    const updatedData = await api.changeDBBook(book);
+    const updatedBook = new Book(updatedData);
     const index = this.getBookIndexById(book.id);
-    this.data[index] = new Book(book);
-    return this.data[index];
+    this.data[index] = updatedBook;
+    return updatedBook;
   }
 
+  // Métodos de consulta
   getBookById(id) {
     const book = this.data.find(b => b.id === id);
     if (!book) throw new Error(`Book with id ${id} not found`);
@@ -59,10 +71,6 @@ export default class Books {
     return this.data.filter(b => b.status === status);
   }
 
-  incrementPriceOfbooks(percentage) {
-    return this.data = this.data.map(b => {b.price = +(b.price * (1 + percentage)).toFixed(1); return b});
-  }
-
   averagePriceOfBooks() {
     if (this.data.length === 0) return '0.00 €';
     const total = this.data.reduce((acc, b) => acc + b.price, 0);
@@ -71,18 +79,13 @@ export default class Books {
 
   booksOfTypeNotes() {
     return this.data.filter(book => book.publisher === 'Apunts');
-  }  
-  
-  
+  }
+
   booksNotSold() {
     return this.data.filter(book => !book.soldDate || book.soldDate === '');
   }
-  
 
   toString() {
     return this.data.map(b => b.toString()).join('\n');
   }
-
-
-
 }
