@@ -12,5 +12,8 @@
   "devDependencies": {
     "msw": "^2.11.3",
     "vite": "^7.1.7"
+  },
+  "dependencies": {
+    "jsdom": "^27.0.1"
   }
 }

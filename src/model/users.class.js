@@ -48,11 +48,13 @@ export default class Users {
   }
 
   // Métodos de consulta
-  getUserById(id) {
-    const user = this.data.find(u => u.id === id);
+  async getUserById(id) {
+    if (!id) throw new Error("User ID is required");
+    const user = await api.getDBUser(id);
     if (!user) throw new Error(`User with id ${id} not found`);
     return user;
   }
+  
 
   getUserIndexById(id) {
     const index = this.data.findIndex(u => u.id === id);

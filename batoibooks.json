@@ -2199,7 +2199,24 @@
       "id": "10"
     },
     {
-      "id": "af0d"
+      "id": 11,
+      "moduleCode": "0011",
+      "publisher": "Mec",
+      "price": 12,
+      "pages": 12,
+      "status": "good",
+      "comments": "Muy buen estado",
+      "userId": 1
+    },
+    {
+      "id": 12,
+      "moduleCode": "0011",
+      "publisher": "Mec",
+      "price": 12,
+      "pages": 12,
+      "status": "new",
+      "comments": "Muy buen estado",
+      "userId": 1
     }
   ]
 }

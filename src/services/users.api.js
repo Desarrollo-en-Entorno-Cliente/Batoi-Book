@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/users';
+const API_URL = import.meta.env.VITE_SERVER + "/users"
 
 export async function getDBUsers() {
   const res = await fetch(API_URL);
@@ -6,7 +6,7 @@ export async function getDBUsers() {
 }
 
 export async function getDBUser(id) {
-  const res = await fetch(`${API_URL}/${id}`);
+  const res = await fetch(`${API_URL}?=${id}`);
   return await res.json();
 }
 

@@ -13,28 +13,30 @@ export default class Books {
   }
 
   // Añade un libro
-  async addBook(book) {
-    const newBookData = await api.addDBBook(book);
+    async addBook(book) {
+    const maxId = this.data.length ? Math.max(...this.data.map(b => b.id)) : 0;
+    const bookWithId = { ...book, id: maxId + 1 };
+    const newBookData = await api.addDBBook(bookWithId);
     const bookInstance = new Book(newBookData);
     this.data.push(bookInstance);
     return bookInstance;
   }
 
-  // Elimina un libro
+   // Elimina un libro
   async removeBook(id) {
-    const book = this.getBookById(id); // Lanza error si no existe
+    const index = this.getBookIndexById(id); // Lanza error si no existe
+    const book = this.data[index];           // Obtenemos el libro directamente
     await api.removeDBBook(id);
-    this.data = this.data.filter(b => b.id !== id);
+    this.data.splice(index, 1);              // Eliminamos del array
     return book;
   }
 
   // Modifica un libro
   async changeBook(book) {
-    const _ = this.getBookById(book.id); // Lanza error si no existe
+    const index = this.getBookIndexById(book.id); // Lanza error si no existe
     const updatedData = await api.changeDBBook(book);
     const updatedBook = new Book(updatedData);
-    const index = this.getBookIndexById(book.id);
-    this.data[index] = updatedBook;
+    this.data[index] = updatedBook;              // Reemplazamos directamente
     return updatedBook;
   }
 
