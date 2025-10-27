@@ -1,6 +1,5 @@
 export default class View {
   constructor() {
-    // CORRECCIÓN: Se inicializan todas las propiedades que los tests esperan.
     this.messages = document.getElementById("messages");
     this.bookList = document.getElementById("list");
     this.form = document.getElementById("form");
@@ -28,7 +27,6 @@ export default class View {
   renderBook(book, modules) {
     let moduleCliteral = `Módulo ${book.moduleCode}`;
     try {
-      // Maneja el error si el módulo no existe, para no detener la renderización
       const module = modules.getModuleByCode(book.moduleCode);
       moduleCliteral = module.cliteral;
     } catch (e) {
@@ -94,15 +92,12 @@ export default class View {
     }
   }
 
-  // ... (constructor y otros métodos) ...
 
   setBookSubmitHandler(callback) {
     if (!this.bookForm) return;
     
-    // CORRECCIÓN: Usar .onsubmit para evitar duplicar listeners en los tests
     this.bookForm.onsubmit = (event) => {
       event.preventDefault();
-      // Recoge los datos del formulario. El test espera strings, así que no se convierten.
       const payload = {
         moduleCode: this.bookForm.querySelector('[id="moduleCode"]')?.value || "MOCK",
         publisher: this.bookForm.querySelector('[id="publisher"]')?.value || "Apunts",
@@ -110,7 +105,7 @@ export default class View {
         pages: this.bookForm.querySelector('[id="pages"]')?.value || "76",
         status: this.bookForm.querySelector('input[name="status"]:checked')?.value || "bad",
         comments: this.bookForm.querySelector('[id="comments"]')?.value || "Muy buen estado",
-      };
+        soldDate: this.bookForm.querySelector('[id="soldDate"]')?.value || "",};
       callback(payload);
     };
   }
@@ -118,7 +113,6 @@ export default class View {
   setBookRemoveHandler(callback) {
     if (!this.removeBtn) return;
 
-    // CORRECCIÓN: Usar .onclick para evitar duplicar listeners en los tests
     this.removeBtn.onclick = () => {
       const idToRemove = document.getElementById("id-remove")?.value;
       callback(idToRemove);

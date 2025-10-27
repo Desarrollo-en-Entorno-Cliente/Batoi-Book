@@ -29,6 +29,7 @@ export default class Controller {
         ...payload,
         price: parseFloat(payload.price) || 0,
         pages: parseInt(payload.pages, 10) || 0,
+        soldDate: payload.soldDate ? new Date(payload.soldDate).toISOString() : null,
         userId: 1, // Se añade un userId por defecto para la API
       };
       const newBook = await this.books.addBook(processedPayload);
@@ -41,11 +42,11 @@ export default class Controller {
 
   async handleRemoveBook(id) {
     try {
-      const numericId = parseInt(id, 10);
-      if (isNaN(numericId)) throw new Error("ID no válido");
+      const numericId = id; 
 
-      await this.books.removeBook(numericId);
-      this.view.removeBook(numericId);
+      if (isNaN(numericId)) throw new Error("ID no válido");
+      await this.books.removeBook(numericId); 
+      this.view.removeBook(numericId); 
       this.view.showMessage("info", "Libro eliminado con éxito");
     } catch (error) {
       this.view.showMessage("error", `Error: ${error.message}`);

@@ -51,6 +51,11 @@ document.querySelector("#app").innerHTML = `
           <label for="comments">Comentarios:</label>
           <textarea id="comments" name="comments"></textarea>
         </div>
+        
+        <div>
+          <label for="soldDate">Fecha de venta (opcional):</label>
+          <input type="date" id="soldDate" name="soldDate" />
+        </div>
         <button type="submit">Guardar</button>
         <button type="reset">Reset</button>
       </form>

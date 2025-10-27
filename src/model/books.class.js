@@ -13,21 +13,21 @@ export default class Books {
   }
 
   // Añade un libro
-    async addBook(book) {
+  async addBook(book) {
     const maxId = this.data.length ? Math.max(...this.data.map(b => b.id)) : 0;
-    const bookWithId = { ...book, id: maxId + 1 };
+    const newNumericId = maxId + 1;
+    const bookWithId = { ...book, id: String(newNumericId) };
     const newBookData = await api.addDBBook(bookWithId);
     const bookInstance = new Book(newBookData);
     this.data.push(bookInstance);
     return bookInstance;
   }
 
-   // Elimina un libro
-  async removeBook(id) {
-    const index = this.getBookIndexById(id); // Lanza error si no existe
-    const book = this.data[index];           // Obtenemos el libro directamente
-    await api.removeDBBook(id);
-    this.data.splice(index, 1);              // Eliminamos del array
+  async removeBook(id) { // id llega como STRING
+    const index = this.getBookIndexById(id); 
+    const book = this.data[index];
+    await api.removeDBBook(id); 
+    this.data.splice(index, 1);              
     return book;
   }
 

@@ -2127,18 +2127,6 @@
   ],
   "books": [
     {
-      "id": "1",
-      "userId": 2,
-      "moduleCode": "5025",
-      "publisher": "Apunts",
-      "price": 12,
-      "pages": 25,
-      "status": "good",
-      "photo": "",
-      "comments": "",
-      "soldDate": "2023-02-01"
-    },
-    {
       "userId": 3,
       "moduleCode": "5021",
       "publisher": "McGraw-Hill",
@@ -2216,16 +2204,7 @@
       "pages": 12,
       "status": "new",
       "comments": "Muy buen estado",
-      "userId": 1
-    },
-    {
-      "id": 13,
-      "moduleCode": "0011",
-      "publisher": "asd",
-      "price": 12,
-      "pages": 12,
-      "status": "new",
-      "comments": "Muy buen estado",
+      "vendido": "",
       "userId": 1
     }
   ]
