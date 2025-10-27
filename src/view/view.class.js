@@ -94,9 +94,13 @@ export default class View {
     }
   }
 
+  // ... (constructor y otros métodos) ...
+
   setBookSubmitHandler(callback) {
     if (!this.bookForm) return;
-    this.bookForm.addEventListener("submit", (event) => {
+    
+    // CORRECCIÓN: Usar .onsubmit para evitar duplicar listeners en los tests
+    this.bookForm.onsubmit = (event) => {
       event.preventDefault();
       // Recoge los datos del formulario. El test espera strings, así que no se convierten.
       const payload = {
@@ -108,14 +112,16 @@ export default class View {
         comments: this.bookForm.querySelector('[id="comments"]')?.value || "Muy buen estado",
       };
       callback(payload);
-    });
+    };
   }
 
   setBookRemoveHandler(callback) {
     if (!this.removeBtn) return;
-    this.removeBtn.addEventListener("click", () => {
+
+    // CORRECCIÓN: Usar .onclick para evitar duplicar listeners en los tests
+    this.removeBtn.onclick = () => {
       const idToRemove = document.getElementById("id-remove")?.value;
       callback(idToRemove);
-    });
+    };
   }
 }

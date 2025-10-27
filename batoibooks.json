@@ -2199,7 +2199,7 @@
       "id": "10"
     },
     {
-      "id": 11,
+      "id": "11",
       "moduleCode": "0011",
       "publisher": "Mec",
       "price": 12,
@@ -2209,9 +2209,19 @@
       "userId": 1
     },
     {
-      "id": 12,
+      "id": "12",
       "moduleCode": "0011",
       "publisher": "Mec",
+      "price": 12,
+      "pages": 12,
+      "status": "new",
+      "comments": "Muy buen estado",
+      "userId": 1
+    },
+    {
+      "id": 13,
+      "moduleCode": "0011",
+      "publisher": "asd",
       "price": 12,
       "pages": 12,
       "status": "new",
