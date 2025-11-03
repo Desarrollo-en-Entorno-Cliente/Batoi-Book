@@ -18,13 +18,17 @@ document.querySelector("#app").innerHTML = `
   <div id="messages"></div>
   <main>
     <div id="list" class="active"></div>
-    <div id="remove">
-      <label for="id-remove">ID del libro a borrar:</label>
-      <input type="text" id="id-remove" required />
-      <button id="removeBtn">Borrar</button>
-    </div>
+    
     <div id="form">
+      <h2 id="formTitle">Añadir libro</h2>
+      
       <form id="bookForm">
+        
+        <div id="book-id-container" style="display: none;">
+          <label for="bookId">ID:</label>
+          <input type="text" id="bookId" name="bookId" disabled />
+        </div>
+
         <div>
           <label for="moduleCode">Módulo:</label>
           <select id="moduleCode" name="moduleCode" required></select>

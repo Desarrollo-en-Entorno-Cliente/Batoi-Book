@@ -2175,37 +2175,15 @@
       "id": "9"
     },
     {
-      "userId": 5,
+      "id": "10",
       "moduleCode": "5021",
       "publisher": "Apunts",
       "price": 5,
       "pages": 57,
       "status": "good",
-      "photo": "",
-      "comments": "",
+      "comments": "Muy buen estado",
       "soldDate": "",
-      "id": "10"
-    },
-    {
-      "id": "11",
-      "moduleCode": "0011",
-      "publisher": "Mec",
-      "price": 12,
-      "pages": 12,
-      "status": "good",
-      "comments": "Muy buen estado",
-      "userId": 1
-    },
-    {
-      "id": "12",
-      "moduleCode": "0011",
-      "publisher": "Mec",
-      "price": 12,
-      "pages": 12,
-      "status": "new",
-      "comments": "Muy buen estado",
-      "vendido": "",
-      "userId": 1
+      "userId": 2
     }
   ]
 }
