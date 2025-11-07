@@ -328,4 +328,6 @@ footer {
   display: none !important;
 }
 
-
+.error{
+  color: red;
+}

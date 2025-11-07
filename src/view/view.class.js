@@ -148,22 +148,60 @@ export default class View {
 
   setBookSubmitHandler(callback) {
     if (!this.bookForm) return;
-
+  
     this.bookForm.addEventListener("submit", event => {
       event.preventDefault();
+  
+      this.bookForm.querySelectorAll(".error").forEach(el => el.textContent = "");
+  
+      let esValido = true;
+  
+      const inputs = this.bookForm.querySelectorAll("input, select, textarea");
+  
+      inputs.forEach(input => {
+        if (input.willValidate && !input.checkValidity()) {
+          esValido = false;
+          let span = input.parentElement.querySelector(".error");
+        if (!span) {
+          span = document.createElement("span");
+          span.classList.add("error");
+          input.parentElement.appendChild(span);
+        }
       
-      const id = this.bookIdInput.value;
+        const validity = input.validity;
+      
+        if (validity.valueMissing) {
+          span.textContent = "Este campo es obligatorio";
+        } else if (validity.typeMismatch) {
+          span.textContent = "Formato inválido";
+        } else if (validity.tooShort) {
+          span.textContent = `Debe tener al menos ${input.minLength} caracteres`;
+        } else if (validity.rangeUnderflow) {
+          span.textContent = `Debe ser mayor o igual a ${input.min}`;
+        } else if (validity.rangeOverflow) {
+          span.textContent = `Debe ser menor o igual a ${input.max}`;
+        } else if (validity.patternMismatch) {
+          span.textContent = "El formato no coincide con el patrón requerido";
+        } else {
+          span.textContent = "Valor inválido";
+        }
+        }
+      });
+  
+      if (!esValido) return;
+  
+      const id = this.bookIdInput?.value;
       const payload = {
         id: id || undefined,
-        moduleCode: this.bookForm.querySelector('#moduleCode')?.value || "MOCK",
-        publisher: this.bookForm.querySelector('#publisher')?.value || "Apunts",
-        price: this.bookForm.querySelector('#price')?.value || "34",
-        pages: this.bookForm.querySelector('#pages')?.value || "76",
-        status: this.bookForm.querySelector('input[name="status"]:checked')?.value || "bad",
-        comments: this.bookForm.querySelector('#comments')?.value || "Muy buen estado",
-        soldDate: this.bookForm.querySelector('#soldDate')?.value || "",
+        moduleCode: this.bookForm.querySelector('#moduleCode').value.trim(),
+        publisher: this.bookForm.querySelector('#publisher').value.trim(),
+        price: this.bookForm.querySelector('#price').value.trim(),
+        pages: this.bookForm.querySelector('#pages').value.trim(),
+        status: this.bookForm.querySelector('input[name="status"]:checked')?.value || "",
+        comments: this.bookForm.querySelector('#comments').value.trim(),
+        soldDate: this.bookForm.querySelector('#soldDate').value.trim(),
       };
-
+  
       callback(payload);
       this.resetForm();
     });
