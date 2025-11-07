@@ -2184,6 +2184,17 @@
       "comments": "Muy buen estado",
       "soldDate": "",
       "userId": 2
+    },
+    {
+      "id": "11",
+      "moduleCode": "MOCK",
+      "publisher": "Apunts",
+      "price": 34,
+      "pages": 76,
+      "status": "bad",
+      "comments": "Muy buen estado",
+      "soldDate": "",
+      "userId": 2
     }
   ]
 }

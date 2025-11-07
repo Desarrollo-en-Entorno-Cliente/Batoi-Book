@@ -149,9 +149,9 @@ export default class View {
   setBookSubmitHandler(callback) {
     if (!this.bookForm) return;
 
-    this.bookForm.onsubmit = event => {
+    this.bookForm.addEventListener("submit", event => {
       event.preventDefault();
-
+      
       const id = this.bookIdInput.value;
       const payload = {
         id: id || undefined,
@@ -166,7 +166,7 @@ export default class View {
 
       callback(payload);
       this.resetForm();
-    };
+    });
 
     const resetButton = this.bookForm.querySelector('button[type="reset"]');
     if (resetButton) resetButton.onclick = () => this.resetForm();

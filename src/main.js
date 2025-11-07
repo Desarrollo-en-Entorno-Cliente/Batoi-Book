@@ -20,7 +20,7 @@ document.querySelector("#app").innerHTML = `
   <div id="list"></div>
   <div id="form">
     <h2 id="formTitle">Añadir libro</h2>
-    <form id="bookForm">
+    <form id="bookForm" novalidate>
       <div id="book-id-container" style="display: none;">
         <label for="bookId">ID:</label>
         <input type="text" id="bookId" name="bookId" disabled />
@@ -106,4 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Mostrar página inicial según hash
   const initialHash = window.location.hash.substring(1) || "list";
   showPage(initialHash);
+
+
+
 });
