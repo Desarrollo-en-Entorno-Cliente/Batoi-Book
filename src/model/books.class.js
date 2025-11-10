@@ -43,13 +43,13 @@ export default class Books {
   // Métodos de consulta
   getBookById(id) {
     const book = this.data.find(b => b.id === id);
-    if (!book) throw new Error(`Book with id ${id} not found`);
-    return book;
+    return book || {};
   }
+  
 
   getBookIndexById(id) {
     const index = this.data.findIndex(b => b.id === id);
-    if (index === -1) throw new Error(`Book with id ${id} not found`);
+    if (index === -1) throw new Error(`Book con id ${id} no encontrado`);
     return index;
   }
 

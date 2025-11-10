@@ -121,10 +121,13 @@ export default class Controller {
     try {
       const book = this.books.getBookById(id);
       this.view.prepareFormForEdit(book);
+      window.isEditing = true;
+      window.location.hash = '#form';
     } catch (error) {
       this.view.showMessage("error", `Error: ${error.message}`);
     }
   }
+
 
   /**
    * Maneja el clic en el icono de añadir al carrito.

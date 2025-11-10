@@ -21,7 +21,7 @@ document.querySelector("#app").innerHTML = `
   <div id="form">
     <h2 id="formTitle">Añadir libro</h2>
     <form id="bookForm" novalidate>
-      <div id="book-id-container" style="display: none;">
+      <div id="book-id-container">
         <label for="bookId">ID:</label>
         <input type="text" id="bookId" name="bookId" disabled />
       </div>
@@ -82,10 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const myController = new Controller();
   myController.init();
 
-  // Guardamos la instancia de la vista globalmente para el router
   window.myViewInstance = myController.view;
 
-  // Router simple basado en hash
   function showPage(pageId) {
     const pages = ["list", "form", "about"];
     pages.forEach(id => {
@@ -93,10 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (el) el.classList.toggle("hidden", id !== pageId);
     });
 
-    // Si es formulario, reseteamos para añadir libro
     if (pageId === "form") {
-      window.myViewInstance.resetForm();
+      if (!window.isEditing) {
+        window.myViewInstance.resetForm();
+      }
+      window.isEditing = false; 
     }
+    
   }
 
   // Escuchador de cambios de hash
