@@ -53,9 +53,10 @@ export default class Books {
     return index;
   }
 
-  bookExists(userId, moduleCode) {
-    return this.data.some(b => b.userId === userId && b.moduleCode === moduleCode);
+  async bookExists(userId, moduleCode) {
+    return await api.existsDBBook(userId, moduleCode);
   }
+  
 
   booksFromUser(userId) {
     return this.data.filter(b => b.userId === userId);

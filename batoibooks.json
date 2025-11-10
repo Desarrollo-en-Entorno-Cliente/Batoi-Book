@@ -2195,6 +2195,28 @@
       "comments": "Muy buen estado",
       "soldDate": "",
       "userId": 2
+    },
+    {
+      "id": "6827",
+      "moduleCode": "5025",
+      "publisher": "Mec",
+      "price": 12,
+      "pages": 12,
+      "status": "new",
+      "comments": "",
+      "soldDate": "",
+      "userId": "2"
+    },
+    {
+      "id": "0c18",
+      "moduleCode": "5024",
+      "publisher": "Mec",
+      "price": 12,
+      "pages": 12,
+      "status": "new",
+      "comments": "",
+      "soldDate": "",
+      "userId": "2"
     }
   ]
 }

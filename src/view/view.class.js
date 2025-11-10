@@ -224,4 +224,40 @@ export default class View {
       else if (action === "delete") handleDelete(id);
     });
   }
+
+  // Detectar cambio en el select de módulo
+setModuleChangeHandler(callback) {
+  const moduleSelect = this.bookForm.querySelector("#moduleCode");
+  this.moduleSelect = moduleSelect;
+  moduleSelect.addEventListener("change", (event) => {
+    const selectedModule = event.target.value;
+    callback(selectedModule);
+  });
+}
+
+// Mostrar error en el span correspondiente debajo del input/select
+showFieldError(inputId, message) {
+  const input = this.bookForm.querySelector(`#${inputId}`);
+  if (!input) return;
+  const parentDiv = input.closest("div"); // busca el div contenedor
+  if (!parentDiv) return;
+
+  const span = parentDiv.querySelector(".error");
+  if (span) {
+    span.textContent = message;
+  } else {
+    console.warn(`No se encontró <span class="error"> debajo de #${inputId}`);
+  }
+}
+
+// Limpiar error del span
+clearFieldError(inputId) {
+  const input = this.bookForm.querySelector(`#${inputId}`);
+  if (!input) return;
+  const parentDiv = input.closest("div");
+  if (!parentDiv) return;
+
+  const span = parentDiv.querySelector(".error");
+  if (span) span.textContent = "";
+  }
 }

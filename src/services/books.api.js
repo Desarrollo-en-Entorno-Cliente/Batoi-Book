@@ -32,3 +32,9 @@ export async function changeDBBook(book) {
   });
   return await res.json();
 }
+
+export async function existsDBBook(userId, moduleCode) {
+  const res = await fetch(`${API_URL}?userId=${userId}&moduleCode=${moduleCode}`);
+  const data = await res.json();
+  return Array.isArray(data) && data.length > 0;
+}
